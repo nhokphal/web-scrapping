@@ -30,7 +30,7 @@ const Products: React.FC = () => {
         };
 
         fetchData();
-    }, []);
+    }, [scrapedData]);
     return (
         <div>
             {/* <p>Title: {scrapedData?.title.map((item: any, index: any) => (
