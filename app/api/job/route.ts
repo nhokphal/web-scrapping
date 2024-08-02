@@ -6,6 +6,10 @@ import { NextResponse } from "next/server";
 import puppeteer from "puppeteer";
 declare const window: any;
 
+function delay(time: number) {
+  return new Promise((resolve) => setTimeout(resolve, time));
+}
+
 export async function GET() {
   try {
     const url = "https://www.khmer24.com/en/jobs/jobs-information-technology";
@@ -16,10 +20,13 @@ export async function GET() {
       timeout: 120000,
     });
 
+    delay(1000);
     await page.goto(url, {
       waitUntil: "networkidle0",
       timeout: 120000,
     });
+
+    delay(1000);
 
     await page.addScriptTag({
       url: "https://code.jquery.com/jquery-3.7.0.js",
