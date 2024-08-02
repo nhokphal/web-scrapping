@@ -52,12 +52,25 @@ export async function GET() {
           ".item-detail .item-fields li:first-child .value"
         );
 
+        const imageElement = element
+          .querySelector(".item-image .img-contain")
+          ?.getAttribute("src");
+        const hrefElement = element.querySelector(".item a:first-child").href;
+
         const title = titleElement ? titleElement.innerHTML.trim() : "";
         const salary = priceElement ? priceElement.innerHTML.trim() : "";
         const category = categoryElement
           ? categoryElement.innerHTML.trim()
           : "";
-        return { title, salary, category };
+        const image = imageElement
+          ? imageElement
+          : "https://www.khmer24.com/v1.1.1/template/img/image-placeholder.png";
+
+        const href = hrefElement ? hrefElement : "";
+
+        console.log("image ", href);
+
+        return { title, salary, category, image, href };
       });
     });
 

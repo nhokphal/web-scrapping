@@ -9,6 +9,8 @@ interface Job {
     title?: string,
     category: string,
     salary: string,
+    image?: string,
+    href?: string
 }
 
 
@@ -45,10 +47,13 @@ const Products: React.FC = () => {
                     <div className='text-center flex justify-center rounded-md w-full '>
                         <div className="flex " title="Woman holding a mug">
                             <div className=' items-center m-auto justify-start'>
+                                <a href={scrapedData[key].href} title={scrapedData[key].title} target="_blank" className='bg-transparent m-4 p-5'>
 
-                                <h3>Position:{scrapedData[key].title}</h3>
-                                <p>salary:{scrapedData[key].salary}</p>
-                                <p>category: {scrapedData[key].category}</p>
+                                    <img className="max-w-20 max-h-20 m-auto items-center object-contain" src={scrapedData[key].image} />
+                                    <h3>Position:{scrapedData[key].title}</h3>
+                                    <p>salary:{scrapedData[key].salary}</p>
+                                    <p>category: {scrapedData[key].category}</p>
+                                </a >
                             </div>
 
                         </div>
