@@ -7,14 +7,13 @@ import React, { useEffect, useState } from 'react';
 
 interface Job {
     title?: string,
-    description: string,
-    price: string,
-    itemList: []
+    category: string,
+    salary: string,
 }
 
 
 const Products: React.FC = () => {
-    const [scrapedData, setScrapedData] = useState("");
+    const [scrapedData, setScrapedData] = useState<Job[]>([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -34,8 +33,6 @@ const Products: React.FC = () => {
     }, []);
     return (
         <div>
-
-            <p>"title {scrapedData.title}"</p>
             {/* <p>Title: {scrapedData?.title.map((item: any, index: any) => (
                 <li key={index}>{item.title}</li>
             ))}</p> */}
@@ -43,14 +40,14 @@ const Products: React.FC = () => {
             {/* <p>item list: {scrapedData.itemList.map((item: any, index) => (
                 <li key={index}>{item}</li>
             ))}</p> */}
-            {Object.keys(scrapedData).map((key) => (
+            {Object.keys(scrapedData).map((key: any) => (
                 <>
                     <div className='text-center flex justify-center rounded-md w-full '>
                         <div className="flex " title="Woman holding a mug">
                             <div className=' items-center m-auto justify-start'>
 
                                 <h3>Position:{scrapedData[key].title}</h3>
-                                <p>salary:{scrapedData[key].price}</p>
+                                <p>salary:{scrapedData[key].salary}</p>
                                 <p>category: {scrapedData[key].category}</p>
                             </div>
 

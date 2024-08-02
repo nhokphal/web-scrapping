@@ -66,11 +66,11 @@ export async function GET() {
         );
 
         const title = titleElement ? titleElement.innerHTML.trim() : "";
-        const price = priceElement ? priceElement.innerHTML.trim() : "";
+        const salary = priceElement ? priceElement.innerHTML.trim() : "";
         const category = categoryElement
           ? categoryElement.innerHTML.trim()
           : "";
-        return { title, price, category };
+        return { title, salary, category };
       });
     });
 
