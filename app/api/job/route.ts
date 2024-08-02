@@ -8,8 +8,8 @@ import puppeteer from "puppeteer";
 export async function GET() {
   try {
     const url = "https://www.khmer24.com/en/jobs/jobs-information-technology";
-    const brower = await puppeteer.launch({ headless: false });
-    const page = await brower.newPage();
+    const browser = await puppeteer.launch({ headless: false });
+    const page = await browser.newPage();
     const navigationPromsie = page.waitForNavigation({
       waitUntil: "networkidle0",
       timeout: 120000,
@@ -35,24 +35,46 @@ export async function GET() {
       price: string;
     }
 
+    // const data = await page.evaluate(() => {
+    //   const features: string[] = [];
+    //   const title = $(".content .item .item-header").text().trim();
+    //   const salary = $(".content .item .item-header .span.salary red")
+    //     .text()
+    //     .trim();
+    //   const description = $("p.post-description").text().trim();
+
+    //   $(".relate-jobs-content")
+    //     .children()
+    //     .each(function () {
+    //       features?.push($(this).text());
+    //     });
+
+    //   return { title };
+    // });
     const data = await page.evaluate(() => {
-      const features: string[] = [];
-      const title = $(".content .item .item-header").text().trim();
-      const salary = $(".content .item .item-header .span.salary red")
-        .text()
-        .trim();
-      const description = $("p.post-description").text().trim();
+      const elements: any = Array.from(
+        document.querySelectorAll(".content .item")
+      );
 
-      $(".relate-jobs-content")
-        .children()
-        .each(function () {
-          features?.push($(this).text());
-        });
+      return elements.map((element: any) => {
+        const titleElement = element.querySelector(".item-header .item-title");
+        const priceElement = element.querySelector(
+          ".item-detail .item-fields .value.red"
+        );
+        const categoryElement = element.querySelector(
+          ".item-detail .item-fields li:first-child .value"
+        );
 
-      return { title };
+        const title = titleElement ? titleElement.innerHTML.trim() : "";
+        const price = priceElement ? priceElement.innerHTML.trim() : "";
+        const category = categoryElement
+          ? categoryElement.innerHTML.trim()
+          : "";
+        return { title, price, category };
+      });
     });
 
-    await brower.close();
+    await browser.close();
     revalidatePath("/");
 
     return NextResponse.json({ ...data });
