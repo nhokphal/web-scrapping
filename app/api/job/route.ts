@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { Html } from "next/document";
 import { NextResponse } from "next/server";
 import puppeteer from "puppeteer";
+declare const window: any;
 
 export async function GET() {
   try {
@@ -30,27 +31,6 @@ export async function GET() {
       throw new Error("jquery not loaded");
     }
 
-    interface itemProps {
-      title: string;
-      price: string;
-    }
-
-    // const data = await page.evaluate(() => {
-    //   const features: string[] = [];
-    //   const title = $(".content .item .item-header").text().trim();
-    //   const salary = $(".content .item .item-header .span.salary red")
-    //     .text()
-    //     .trim();
-    //   const description = $("p.post-description").text().trim();
-
-    //   $(".relate-jobs-content")
-    //     .children()
-    //     .each(function () {
-    //       features?.push($(this).text());
-    //     });
-
-    //   return { title };
-    // });
     const data = await page.evaluate(() => {
       const elements: any = Array.from(
         document.querySelectorAll(".content .item")
