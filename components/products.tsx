@@ -1,38 +1,50 @@
+// ExampleComponent.tsx
 "use client"
 
-import { useStore } from "@/hooks/products"
+
+import React, { useEffect, useState } from 'react';
 
 
-
-const Products = async () => {
-
-    const products = useStore((state: any) => state.products)
-    console.log("product : ", products)
-    return (
-        <div className="m-auto w-full">
-            {products?.length > 0 ? (
-                <div>
-                    {products.map((product: any, index: number) => (
-                        product.title ? (
-                            <div key={index} className="border-4">
-                                <div className="flex w-full items-top justify-between">
-                                    <h3>{product.title}</h3>
-                                    <a
-                                        target="_blank"
-                                        href={product?.url}
-                                        className="hover:bg-gray-100 border px-4 py-1 ml-2 rounded-md"
-                                    >
-                                        link
-                                    </a>
-                                </div>
-                            </div>) : null
-
-                    ))}
-                </div>) : (<>no products found</>)
-            }
-            <p>products: {products.title}</p>
-        </div >
-    )
+interface Job {
+    title?: string,
+    description: string,
+    price: string,
+    itemList: []
 }
+
+
+const Products: React.FC = () => {
+    const [scrapedData, setScrapedData] = useState<Job[]>([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const res = await fetch('http://localhost:3000/api/job');
+                const data = await res.json()
+                console.log("data", data)
+                setScrapedData(data)
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        fetchData();
+    }, []);
+    return (
+        <div>
+
+            <p>"title" {scrapedData.title}</p>
+            {/* <p>Title: {scrapedData?.title.map((item: any, index: any) => (
+                <li key={index}>{item.title}</li>
+            ))}</p> */}
+
+            {/* <p>item list: {scrapedData.itemList.map((item: any, index) => (
+                <li key={index}>{item}</li>
+            ))}</p> */}
+
+
+        </div>
+    );
+};
 
 export default Products;

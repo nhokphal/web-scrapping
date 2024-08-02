@@ -1,36 +1,39 @@
 "use client"
 
 
-import { scrapProducts } from "@/actions/scrape-products"
+
 import { useStore } from "@/hooks/products"
+import axios from "axios"
 import { useState } from "react"
 
 const SearchForm = () => {
 
-    const [searchPrompt, setSearchPromt] = useState("")
-    const [isloading, setLoarding] = useState(false)
+    // const [searchPrompt, setSearchPromt] = useState("")
+    // const [isloading, setLoarding] = useState(false)
 
 
-    const products = useStore((state: any) => state.products)
-    const addProduct = useStore((state: any) => state.addProduct)
+    // const products = useStore((state: any) => state.products)
+    // const addProduct = useStore((state: any) => state.addProduct)
+    const [data, setData] = useState("");
 
-
-    const OnSubmit = (e: any) => {
+    const OnSubmit = async (e: any) => {
         e.preventDefault();
-        setLoarding(true)
-        setSearchPromt(e.target.value)
-
-
+        // setLoarding(true)
+        // setSearchPromt(e.target.value)
+        // axios.get("/api/job")
+        const res = await fetch('/api/job/')
+        setData(data)
+        console.log(res)
         try {
-            const product = scrapProducts(searchPrompt)
-            addProduct(product)
-            setSearchPromt("")
-            console.log(product)
+            // const product = scrapProducts(searchPrompt)
+            // addProduct(product)
+            // setSearchPromt("")
+            // console.log(product)
 
         } catch (error) {
 
         } finally {
-            setLoarding(false)
+            // setLoarding(false)
         }
 
     }
@@ -42,9 +45,6 @@ const SearchForm = () => {
                 className="w-full p-3 border-4 border-neutral-50"
                 type="text"
                 placeholder="search"
-                value={searchPrompt}
-                onChange={(e) => setSearchPromt(e.target.value)}
-
             >
 
             </input>
@@ -53,15 +53,15 @@ const SearchForm = () => {
                 <button
                     className="text-white bg-black rounded-sm "
                     onClick={OnSubmit}
-                    disabled={isloading}
+                // disabled={isloading}
                 >
                     scrape
                 </button>
 
                 <button
-                    className={`${!products.length && !isloading ? "cursor-pointer" : ""} text-white bg-black rounded-sm`}
+                    // className={`${!products.length && !isloading ? "cursor-pointer" : ""} text-white bg-black rounded-sm`}
                     onClick={OnSubmit}
-                    disabled={isloading}
+                // disabled={isloading}
                 >
                     export
                 </button>
